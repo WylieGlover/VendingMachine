@@ -36,18 +36,20 @@ class VendingMachine{
 
         System.out.println("Welcome to Wylie's Vending Machine!");
 
-        Item items[] = new Item[5];
+        Item items[] = new Item[7];
         items[0] = new Item("Snickers", 1.50f);
         items[1] = new Item("Twix", 1.50f);
         items[2] = new Item("Doritos", 1.50f);
         items[3] = new Item("Coke", 1f);
         items[4] = new Item("Pocky Sticks", 1.50f);
+        items[5] = new Item("Reeses", 2f); 
+        items[6] = new Item("Gummy bears", 2.75f);
         
         for(int i = 0; i < items.length; i++){
 
             System.out.print(items[i].name + " " + i + " | ");
         
-            if(i == 2 || i == 4){
+            if(i == 2 || i == 5 || i == 6){
                 System.out.println("");
             }
         }
@@ -101,10 +103,10 @@ class VendingMachine{
         if(items[items_r].price != amount_f){
 
             if(items[items_r].price < amount_f){
-                 :   
+
             float diff =  amount_f - items[items_r].price;
                 System.out.println(items[items_r].name + " dropped! You have a remaining balance of $" + diff + " after your purchase. " +
-                "Please grab your remaining change.");
+                "Please grab your remaining change. Have a nice day!");
             
              }
 
