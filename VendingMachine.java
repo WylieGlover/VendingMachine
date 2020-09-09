@@ -17,11 +17,25 @@ class Item{
 }
 
 class VendingMachine{
+    
+    public static boolean isNumeric(String strNum){
+
+        if(strNum == null){
+            return false;
+        } 
+        try{
+            double d = Double.parseDouble(strNum);
+        } catch (NumberFormatException nfe){
+            return false;
+        }
+        return true;
+    }
+    
+
     public static void main(String[] args){
 
         System.out.println("Welcome to Wylie's Vending Machine!");
 
-        
         Item items[] = new Item[5];
         items[0] = new Item("Snickers", 1.50f);
         items[1] = new Item("Twix", 1.50f);
@@ -33,49 +47,75 @@ class VendingMachine{
 
             System.out.print(items[i].name + " " + i + " | ");
         
-            if(i == 2 || i == 5 || i == 8 || i == 11){
+            if(i == 2 || i == 4){
                 System.out.println("");
             }
         }
 
         Scanner input = new Scanner(System.in);
-        System.out.println("What would you like today? (Enter a number): ");
-        String selection = input.nextLine();
-
+        int items_r = 0;
+        boolean is_valid = false;
         
-        int items_r = Integer.parseInt(selection);
-        
-        if (items_r > items.length - 1){
-            System.out.println("Error! Didn't select an available item!");
-            System.exit(0);
-        }
+        do { 
 
-        if(items_r < items.length){
-            System.out.println(items[items_r].name + " selected! Please enter " + items[items_r].price);
-        }
-         
-        String amount = input.nextLine();
-        float amount_f = Float.parseFloat(amount);
+            System.out.print("What would you like today? (Enter a number): ");
+            String selection = input.nextLine();
             
-        if(items[items_r].price != amount_f){
+            is_valid = isNumeric(selection);
 
-            
-            if(items[items_r].price < amount_f){
-                    
-            float diff =  amount_f - items[items_r].price;
-            System.out.println(items[items_r].name + " dropped! You have a remaining balance of $" + diff + " after your purchase. " +
-            "Please grab your remaining change.");
+            if(is_valid == false){
+                System.out.println("Error! Not a number!");
+                
+            } 
+            else{
+                items_r = Integer.parseInt(selection);
             }
             
+            if (items_r > items.length - 1 || items_r < 0){ 
+                System.out.println("Error! Didn't select an available item!");
+                
+                
+            } 
+        } 
+        while(items_r > items.length - 1 || items_r < 0 || is_valid == false);
+
+        float amount_f = 0;
+
+        do{
+            
+            if(items_r < items.length){
+                System.out.println(items[items_r].name + " selected! Please enter " + items[items_r].price);
+            }   
+           
+            String amount = input.nextLine();
+            is_valid = isNumeric(amount);
+            
+            if(is_valid == false){
+                System.out.println("Error! Not a number!");
+            }
+            else{
+                amount_f = Float.parseFloat(amount); 
+            }
+        } while(is_valid == false);
+        
+        if(items[items_r].price != amount_f){
+
+            if(items[items_r].price < amount_f){
+                 :   
+            float diff =  amount_f - items[items_r].price;
+                System.out.println(items[items_r].name + " dropped! You have a remaining balance of $" + diff + " after your purchase. " +
+                "Please grab your remaining change.");
+            
+             }
+
             if(items[items_r].price > amount_f)
-            System.out.println("Insufficient funds! Please insert the correct funds.");
+                System.out.println("Insufficient funds! Please insert the correct funds.");
                 
             }
         else{
-        
             System.out.println(items[items_r].name + " dropped! Have a nice day!");
-        
         }
             
         }
+
 }
